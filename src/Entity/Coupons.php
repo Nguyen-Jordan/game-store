@@ -28,8 +28,8 @@ class Coupons
     #[ORM\Column]
     private ?int $max_usage = null;
 
-    #[ORM\Column(options: ['default' => 'CURRENT_TIMESTAMP'])]
-    private ?\DateTimeInterface $validity = null;
+    #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private $validity = null;
 
     #[ORM\Column]
     private ?bool $is_valid = null;

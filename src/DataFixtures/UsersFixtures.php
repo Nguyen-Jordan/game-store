@@ -40,7 +40,7 @@ class UsersFixtures extends Fixture
           $user->setFirstname($faker->firstName);
           $user->setLastname($faker->lastName);
           $user->setAddress($faker->streetAddress);
-          $user->setZipcode(str_replace('', '', $faker->postcode));
+          $user->setZipcode(str_replace(' ', '', $faker->postcode));
           $user->setCity($faker->city);
           $user->setPassword(
             $this->passwordHasher->hashPassword($user, 'MamaMia')

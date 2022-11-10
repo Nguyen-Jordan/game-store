@@ -14,40 +14,41 @@ class CategoriesFixtures extends Fixture
   
     public function load(ObjectManager $manager): void
     {
-      $parent = $this->createCategory('Jeux Vidéo', null, $manager);
+      $parent = $this->createCategory('Jeux Vidéo', null, 1, $manager);
         
-      $this->createCategory('PlayStation 5', $parent, $manager);
-      $this->createCategory('PlayStation 4', $parent, $manager);
-      $this->createCategory('Xbox One', $parent, $manager);
-      $this->createCategory('Xbox Series', $parent, $manager);
-      $this->createCategory('Switch', $parent, $manager);
-      $this->createCategory('PC', $parent, $manager);
+      $this->createCategory('PlayStation 5', $parent, 2, $manager);
+      $this->createCategory('PlayStation 4', $parent,3, $manager);
+      $this->createCategory('Xbox One', $parent,4, $manager);
+      $this->createCategory('Xbox Series', $parent,5, $manager);
+      $this->createCategory('Switch', $parent,6, $manager);
+      $this->createCategory('PC', $parent,7, $manager);
   
-      $parent = $this->createCategory('Console', null, $manager);
+      $parent = $this->createCategory('Console', null,8, $manager);
       
-      $this->createCategory('PlayStation 5', $parent, $manager);
-      $this->createCategory('PlayStation 4', $parent, $manager);
-      $this->createCategory('Xbox One', $parent, $manager);
-      $this->createCategory('Xbox Series', $parent, $manager);
-      $this->createCategory('Switch', $parent, $manager);
-      $this->createCategory('PC', $parent, $manager);
+      $this->createCategory('PlayStation 5', $parent,9, $manager);
+      $this->createCategory('PlayStation 4', $parent,10, $manager);
+      $this->createCategory('Xbox One', $parent,11, $manager);
+      $this->createCategory('Xbox Series', $parent,12, $manager);
+      $this->createCategory('Switch', $parent,13, $manager);
+      $this->createCategory('PC', $parent,14, $manager);
   
-      $parent = $this->createCategory('Accessoires', null, $manager);
-      $this->createCategory('Casque', $parent, $manager);
-      $this->createCategory('Son', $parent, $manager);
-      $this->createCategory('Micro', $parent, $manager);
-      $this->createCategory('Camera', $parent, $manager);
-      $this->createCategory('Casque VR', $parent, $manager);
+      $parent = $this->createCategory('Accessoires', null,15, $manager);
+      $this->createCategory('Casque', $parent,16, $manager);
+      $this->createCategory('Son', $parent,17, $manager);
+      $this->createCategory('Micro', $parent,18, $manager);
+      $this->createCategory('Camera', $parent,19, $manager);
+      $this->createCategory('Casque VR', $parent,20, $manager);
       
       $manager->flush();
     }
     
-    public function createCategory(string $name, Categories $parent = null, ObjectManager $manager)
+    public function createCategory(string $name, Categories $parent = null, int $categoryOrder, ObjectManager $manager)
     {
       $category = new Categories();
       $category->setName($name);
       $category->setSlug($this->slugger->slug($category->getName())->lower());
       $category->setParent($parent);
+      $category->setCategoryOrder($categoryOrder);
       $manager->persist($category);
       
       $this->addReference('cat-'.$this->counter, $category);

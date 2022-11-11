@@ -2,16 +2,19 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Images;
 use App\Entity\Products;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -39,15 +42,21 @@ class ProductsCrudController extends AbstractCrudController
       return [
         IdField::new('id')
           ->hideOnForm(),
-        TextField::new('name'),
-        TextEditorField::new('description'),
-        MoneyField::new('price')
+        TextField::new('name', 'Nom'),
+        SlugField::new('slug')
+          ->setTargetFieldName('name')
+          ->hideOnIndex(),
+        TextEditorField::new('description', 'Description'),
+        MoneyField::new('price', 'Prix')
           ->setCurrency('EUR'),
         IntegerField::new('stock'),
-        AssociationField::new('categories'),
-        AssociationField::new('images')
-        ->hideOnIndex(),
-        DateTimeField::new('createdAt')
+        AssociationField::new('categories', 'Catégorie du produit'),
+        CollectionField::new('images')
+          ->allowDelete(true)
+          ->renderExpanded()
+          ->setEntryIsComplex()
+          ->useEntryCrudForm(ImagesCrudController::class),
+        DateTimeField::new('createdAt', 'Date de création')
           ->hideOnForm()
       ];
     }

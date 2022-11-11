@@ -5,30 +5,22 @@ namespace App\Controller\Admin;
 use App\Entity\Categories;
 use App\Entity\Coupons;
 use App\Entity\CouponsTypes;
+use App\Entity\Images;
 use App\Entity\Products;
 use App\Entity\Users;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
-    public function __construct(
-      private AdminUrlGenerator $adminUrlGenerator
-    ){
-    }
-  
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        $url = $this->adminUrlGenerator
-          ->setController(UsersCrudController::class)
-          ->generateUrl();
-        return $this->redirect($url);
+        return $this->render('admin/dashboard.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -55,7 +47,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Produits');
         yield MenuItem::subMenu('Actions', 'fa fa-bars')->setSubItems([
           MenuItem::linkToCrud('Liste des produits', 'fas fa-eye', Products::class),
-          MenuItem::linkToCrud('Ajouter un produit', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW)
+          MenuItem::linkToCrud('Ajouter un produit', 'fas fa-plus', Products::class)->setAction(Crud::PAGE_NEW),
+          MenuItem::linkToCrud('Liste des images', 'fas fa-eye', Images::class),
+          MenuItem::linkToCrud('Ajouter une image', 'fas fa-plus', Images::class)->setAction(Crud::PAGE_NEW)
         ]);
   
         yield MenuItem::section('Coupons');

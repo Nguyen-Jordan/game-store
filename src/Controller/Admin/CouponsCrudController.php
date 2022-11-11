@@ -40,12 +40,12 @@ class CouponsCrudController extends AbstractCrudController
           ->hideOnForm(),
         TextField::new('code'),
         TextEditorField::new('description'),
-        IntegerField::new('discount'),
-        IntegerField::new('max_usage'),
-        DateTimeField::new('validity'),
-        BooleanField::new('is_valid'),
-        AssociationField::new('coupons_types'),
-        DateTimeField::new('created_at')
+        IntegerField::new('discount', 'Remise'),
+        IntegerField::new('max_usage', 'Nombre maximum d\'utilisation'),
+        DateTimeField::new('validity', 'Date de validité'),
+        BooleanField::new('is_valid', 'Actif'),
+        AssociationField::new('coupons_types', 'Type de coupon'),
+        DateTimeField::new('created_at', 'Date de création')
         ->hideOnForm(),
       ];
     }

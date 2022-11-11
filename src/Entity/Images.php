@@ -17,7 +17,6 @@ class Images
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Products $products = null;
 
     public function getId(): ?int
